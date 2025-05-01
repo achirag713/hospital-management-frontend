@@ -1,0 +1,266 @@
+.settings-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+  }
+  
+  .settings-layout {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .settings-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .sidebar-tab {
+    padding: 1rem;
+    border: none;
+    background: none;
+    text-align: left;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s;
+  }
+  
+  .sidebar-tab:last-child {
+    border-bottom: none;
+  }
+  
+  .sidebar-tab:hover {
+    background-color: var(--light-bg);
+  }
+  
+  .sidebar-tab.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .settings-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .settings-panel {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  
+  .panel-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .panel-description {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+  }
+  
+  .checkbox-group {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .checkbox-group:last-child {
+    border-bottom: none;
+  }
+  
+  .checkbox-group label {
+    font-weight: 500;
+    margin-left: 0.5rem;
+  }
+  
+  .checkbox-group p {
+    margin: 0.25rem 0 0 1.75rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+  }
+  
+  .form-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .working-day {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .working-day:last-child {
+    border-bottom: none;
+  }
+  
+  .day-toggle {
+    width: 150px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .day-toggle label {
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .hours-inputs {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .time-input {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+  }
+  
+  .time-input label {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-light);
+  }
+  
+  .danger-zone {
+    border-color: #ffdbdb;
+    background-color: #fff9f9;
+  }
+  
+  .danger-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border: 1px solid #ffcaca;
+    border-radius: 6px;
+    background-color: #fff5f5;
+  }
+  
+  .danger-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #e12d39;
+  }
+  
+  .danger-info p {
+    margin: 0;
+    max-width: 400px;
+  }
+  
+  .delete-account-modal p {
+    margin-bottom: 1rem;
+  }
+  
+  .warning-text {
+    color: #e12d39;
+    font-weight: 500;
+  }
+  
+  .delete-confirm-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .error-message {
+    background-color: #fff0f0;
+    color: #e12d39;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .success-message {
+    background-color: #f0fff4;
+    color: #38a169;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .settings-layout {
+      flex-direction: column;
+    }
+    
+    .settings-sidebar {
+      width: 100%;
+    }
+    
+    .working-day {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .day-toggle {
+      margin-bottom: 0.5rem;
+    }
+    
+    .hours-inputs {
+      width: 100%;
+    }
+    
+    .danger-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .danger-info {
+      margin-bottom: 1rem;
+    }
+    
+    .modal-actions {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .modal-actions button {
+      width: 100%;
+    }
+  }

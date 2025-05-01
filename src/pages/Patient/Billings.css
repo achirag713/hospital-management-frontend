@@ -1,0 +1,36 @@
+.billings-page {
+    padding: 1rem;
+  }
+
+  .billings-page h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  .table th, .table td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .table th {
+    background-color: var(--light-gray);
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-color-dark);
+  }
