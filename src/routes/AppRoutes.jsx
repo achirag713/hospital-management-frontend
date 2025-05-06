@@ -14,14 +14,13 @@ import AdminDashboard from '../pages/Admin/Dashboard';
 import AdminDoctors from '../pages/Admin/Doctors';
 import AdminPatients from '../pages/Admin/Patients';
 import AdminAppointments from '../pages/Admin/Appointments';
-import AdminSchedule from '../pages/Admin/Schedule';
+
 import AdminSettings from '../pages/Admin/Settings';
 
 // Doctor Pages
 import DoctorDashboard from '../pages/Doctor/Dashboard';
 import DoctorMyPatients from '../pages/Doctor/MyPatients';
 import DoctorAppointments from '../pages/Doctor/Appointments';
-import DoctorSchedule from '../pages/Doctor/Schedule';
 import DoctorSettings from '../pages/Doctor/Settings';
 
 // Patient Pages
@@ -60,10 +59,7 @@ const AppRoutes = () => {
         path="/admin/appointments" 
         element={<ProtectedRoute element={<AdminAppointments />} allowedRoles={['admin']} />} 
       />
-      <Route 
-        path="/admin/schedule" 
-        element={<ProtectedRoute element={<AdminSchedule />} allowedRoles={['admin']} />} 
-      />
+
       <Route 
         path="/admin/settings" 
         element={<ProtectedRoute element={<AdminSettings />} allowedRoles={['admin']} />} 
@@ -81,10 +77,6 @@ const AppRoutes = () => {
       <Route 
         path="/doctor/appointments" 
         element={<ProtectedRoute element={<DoctorAppointments />} allowedRoles={['doctor']} />} 
-      />
-      <Route 
-        path="/doctor/schedule" 
-        element={<ProtectedRoute element={<DoctorSchedule />} allowedRoles={['doctor']} />} 
       />
       <Route 
         path="/doctor/settings" 

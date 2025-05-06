@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PatientLayout from '../../layouts/PatientLayout';
 import Button from '../../components/common/Button';
+import Modal from '../../components/common/Modal';
 import './Settings.css'; // Import the CSS file for styling
 
 const Settings = () => {
@@ -19,16 +20,11 @@ const Settings = () => {
     newPassword: '',
     confirmPassword: '',
   });
-  const [notificationSettings, setNotificationSettings] = useState({
-    email: true,
-    sms: true,
-    appointments: true,
-    reminders: true,
-    newsletters: false,
-  });
   const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -62,33 +58,36 @@ const Settings = () => {
     }
   };
 
-  const handleNotificationChange = (e) => {
-    const { name, checked } = e.target;
-    setNotificationSettings({
-      ...notificationSettings,
-      [name]: checked,
-    });
+  const handleProfileSubmit = (e) => {
+    e.preventDefault();
+    // In a real application, you would make an API call here
+    // api.profile.update(profileData);
+    
+    setSuccessMessage('Profile updated successfully');
+    setIsEditing(false);
+    
+    setTimeout(() => {
+      setSuccessMessage('');
+    }, 3000);
   };
 
-  const validateProfileForm = () => {
-    const newErrors = {};
-    
-    if (!profileData.name.trim()) {
-      newErrors.name = 'Name is required';
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (validatePasswordForm()) {
+      // In a real application, you would make an API call here
+      // api.profile.changePassword(passwordData);
+      
+      setSuccessMessage('Password changed successfully');
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      });
+      
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
     }
-    
-    if (!profileData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^\S+@\S+\.\S+$/.test(profileData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-    
-    if (!profileData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const validatePasswordForm = () => {
@@ -114,50 +113,22 @@ const Settings = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleProfileSubmit = (e) => {
-    e.preventDefault();
-    if (validateProfileForm()) {
-      // In a real application, you would make an API call here
-      // api.profile.updateProfile(profileData);
-      
-      setSuccessMessage('Profile updated successfully');
-      setIsEditing(false);
-      
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== 'DELETE') {
+      setErrors({ deleteAccount: 'Please type DELETE to confirm' });
+      return;
     }
-  };
-
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault();
-    if (validatePasswordForm()) {
-      // In a real application, you would make an API call here
-      // api.profile.changePassword(passwordData);
+    
+    try {
+      // Mock logout
+      // logout();
       
-      setSuccessMessage('Password changed successfully');
-      setPasswordData({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: '',
-      });
-      
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
+      // Redirect to home page
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      setErrors({ deleteAccount: 'Failed to delete account' });
     }
-  };
-
-  const handleNotificationSubmit = (e) => {
-    e.preventDefault();
-    // In a real application, you would make an API call here
-    // api.profile.updateNotificationSettings(notificationSettings);
-    
-    setSuccessMessage('Notification settings updated successfully');
-    
-    setTimeout(() => {
-      setSuccessMessage('');
-    }, 3000);
   };
 
   return (
@@ -186,10 +157,10 @@ const Settings = () => {
               Change Password
             </div>
             <div 
-              className={`tab ${activeTab === 'notifications' ? 'active' : ''}`}
-              onClick={() => setActiveTab('notifications')}
+              className={`tab ${activeTab === 'danger' ? 'active' : ''}`}
+              onClick={() => setActiveTab('danger')}
             >
-              Notification Settings
+              Danger Zone
             </div>
           </div>
           
@@ -198,14 +169,12 @@ const Settings = () => {
               <div className="tab-content">
                 <div className="tab-header">
                   <h2>Profile Information</h2>
-                  {!isEditing ? (
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setIsEditing(true)}
-                    >
-                      Edit Profile
-                    </Button>
-                  ) : null}
+                  <Button
+                    variant={isEditing ? "outline" : "primary"}
+                    onClick={() => setIsEditing(!isEditing)}
+                  >
+                    {isEditing ? 'Cancel' : 'Edit Profile'}
+                  </Button>
                 </div>
                 
                 <form onSubmit={handleProfileSubmit}>
@@ -219,9 +188,8 @@ const Settings = () => {
                         value={profileData.name}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
-                        className={errors.name ? 'error' : ''}
+                        required
                       />
-                      {errors.name && <div className="error-message">{errors.name}</div>}
                     </div>
                     
                     <div className="form-group">
@@ -233,23 +201,21 @@ const Settings = () => {
                         value={profileData.email}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
-                        className={errors.email ? 'error' : ''}
+                        required
                       />
-                      {errors.email && <div className="error-message">{errors.email}</div>}
                     </div>
                     
                     <div className="form-group">
                       <label htmlFor="phone">Phone Number</label>
                       <input
-                        type="text"
+                        type="tel"
                         id="phone"
                         name="phone"
                         value={profileData.phone}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
-                        className={errors.phone ? 'error' : ''}
+                        required
                       />
-                      {errors.phone && <div className="error-message">{errors.phone}</div>}
                     </div>
                     
                     <div className="form-group">
@@ -261,6 +227,7 @@ const Settings = () => {
                         value={profileData.dob}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
+                        required
                       />
                     </div>
                     
@@ -272,6 +239,7 @@ const Settings = () => {
                         value={profileData.bloodGroup}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
+                        required
                       >
                         <option value="">Select Blood Group</option>
                         <option value="A+">A+</option>
@@ -288,12 +256,13 @@ const Settings = () => {
                     <div className="form-group">
                       <label htmlFor="emergencyContact">Emergency Contact</label>
                       <input
-                        type="text"
+                        type="tel"
                         id="emergencyContact"
                         name="emergencyContact"
                         value={profileData.emergencyContact}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
+                        required
                       />
                     </div>
                     
@@ -305,26 +274,15 @@ const Settings = () => {
                         value={profileData.address}
                         onChange={handleProfileChange}
                         disabled={!isEditing}
-                        rows={3}
+                        required
+                        rows="3"
                       />
                     </div>
                   </div>
                   
                   {isEditing && (
                     <div className="form-actions">
-                      <Button 
-                        variant="outline" 
-                        onClick={() => {
-                          setIsEditing(false);
-                          setErrors({});
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button 
-                        variant="primary" 
-                        type="submit"
-                      >
+                      <Button type="submit" variant="primary">
                         Save Changes
                       </Button>
                     </div>
@@ -346,9 +304,11 @@ const Settings = () => {
                       name="currentPassword"
                       value={passwordData.currentPassword}
                       onChange={handlePasswordChange}
-                      className={errors.currentPassword ? 'error' : ''}
+                      required
                     />
-                    {errors.currentPassword && <div className="error-message">{errors.currentPassword}</div>}
+                    {errors.currentPassword && (
+                      <div className="error-message">{errors.currentPassword}</div>
+                    )}
                   </div>
                   
                   <div className="form-group">
@@ -359,9 +319,11 @@ const Settings = () => {
                       name="newPassword"
                       value={passwordData.newPassword}
                       onChange={handlePasswordChange}
-                      className={errors.newPassword ? 'error' : ''}
+                      required
                     />
-                    {errors.newPassword && <div className="error-message">{errors.newPassword}</div>}
+                    {errors.newPassword && (
+                      <div className="error-message">{errors.newPassword}</div>
+                    )}
                   </div>
                   
                   <div className="form-group">
@@ -372,117 +334,86 @@ const Settings = () => {
                       name="confirmPassword"
                       value={passwordData.confirmPassword}
                       onChange={handlePasswordChange}
-                      className={errors.confirmPassword ? 'error' : ''}
+                      required
                     />
-                    {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
+                    {errors.confirmPassword && (
+                      <div className="error-message">{errors.confirmPassword}</div>
+                    )}
                   </div>
                   
                   <div className="form-actions">
-                    <Button 
-                      variant="primary" 
-                      type="submit"
-                    >
-                      Update Password
+                    <Button type="submit" variant="primary">
+                      Change Password
                     </Button>
                   </div>
                 </form>
               </div>
             )}
             
-            {activeTab === 'notifications' && (
-              <div className="tab-content">
-                <h2>Notification Settings</h2>
+            {/* Danger Zone Tab */}
+            {activeTab === 'danger' && (
+              <div className="settings-panel danger-zone">
+                <h2>Danger Zone</h2>
+                <p className="panel-description">Actions here can permanently affect your account</p>
                 
-                <form onSubmit={handleNotificationSubmit}>
-                  <div className="notifications-section">
-                    <h3>Communication Channels</h3>
-                    
-                    <div className="checkbox-group">
-                      <label htmlFor="email">
-                        <input
-                          type="checkbox"
-                          id="email"
-                          name="email"
-                          checked={notificationSettings.email}
-                          onChange={handleNotificationChange}
-                        />
-                        Email Notifications
-                      </label>
-                    </div>
-                    
-                    <div className="checkbox-group">
-                      <label htmlFor="sms">
-                        <input
-                          type="checkbox"
-                          id="sms"
-                          name="sms"
-                          checked={notificationSettings.sms}
-                          onChange={handleNotificationChange}
-                        />
-                        SMS Notifications
-                      </label>
-                    </div>
+                <div className="danger-item">
+                  <div className="danger-info">
+                    <h3>Delete Account</h3>
+                    <p>Permanently delete your account and all associated data</p>
                   </div>
-                  
-                  <div className="notifications-section">
-                    <h3>Notification Types</h3>
-                    
-                    <div className="checkbox-group">
-                      <label htmlFor="appointments">
-                        <input
-                          type="checkbox"
-                          id="appointments"
-                          name="appointments"
-                          checked={notificationSettings.appointments}
-                          onChange={handleNotificationChange}
-                        />
-                        Appointment Confirmations and Changes
-                      </label>
-                    </div>
-                    
-                    <div className="checkbox-group">
-                      <label htmlFor="reminders">
-                        <input
-                          type="checkbox"
-                          id="reminders"
-                          name="reminders"
-                          checked={notificationSettings.reminders}
-                          onChange={handleNotificationChange}
-                        />
-                        Medication and Appointment Reminders
-                      </label>
-                    </div>
-                    
-                    <div className="checkbox-group">
-                      <label htmlFor="newsletters">
-                        <input
-                          type="checkbox"
-                          id="newsletters"
-                          name="newsletters"
-                          checked={notificationSettings.newsletters}
-                          onChange={handleNotificationChange}
-                        />
-                        Hospital Newsletters and Updates
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div className="form-actions">
-                    <Button 
-                      variant="primary" 
-                      type="submit"
-                    >
-                      Save Preferences
-                    </Button>
-                  </div>
-                </form>
+                  <Button 
+                    variant="danger" 
+                    onClick={() => setIsDeleteModalOpen(true)}
+                  >
+                    Delete Account
+                  </Button>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
       
-      
+      {/* Delete Account Confirmation Modal */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="Delete Account"
+      >
+        <div className="delete-account-modal">
+          <p>
+            This action cannot be undone. This will permanently delete your account and remove all
+            associated data.
+          </p>
+          <p className="warning-text">
+            Please type <strong>DELETE</strong> to confirm:
+          </p>
+          <input
+            type="text"
+            value={deleteConfirmText}
+            onChange={(e) => setDeleteConfirmText(e.target.value)}
+            className="delete-confirm-input"
+          />
+          {errors.deleteAccount && (
+            <div className="error-message">{errors.deleteAccount}</div>
+          )}
+          <div className="modal-actions">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="danger" 
+              onClick={handleDeleteAccount}
+              disabled={deleteConfirmText !== 'DELETE'}
+            >
+              Permanently Delete Account
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </PatientLayout>
   );
 };

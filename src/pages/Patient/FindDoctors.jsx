@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientLayout from '../../layouts/PatientLayout';
-import './FindDoctors.css'; // Assuming you have a CSS file for styling
+import './FindDoctors.css'; 
 
 // Mock data for doctors with expanded information for doctor profiles
 const mockDoctors = [

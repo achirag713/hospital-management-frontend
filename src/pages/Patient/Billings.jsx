@@ -42,6 +42,19 @@ const Billings = () => {
     fetchBills();
   }, []);
 
+  const getStatusClass = (status) => {
+    switch (status.toLowerCase()) {
+      case 'paid':
+        return 'status-paid';
+      case 'unpaid':
+        return 'status-pending';
+      case 'overdue':
+        return 'status-overdue';
+      default:
+        return 'status-pending';
+    }
+  };
+
   return (
     <PatientLayout>
       <div className="billings-page">
@@ -49,42 +62,41 @@ const Billings = () => {
         <p>View and manage your medical bills.</p>
 
         {loading ? (
-          <p>Loading bills...</p>
+          <div className="loading">Loading bills...</div>
         ) : bills.length > 0 ? (
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bills.map((bill) => (
-                  <tr key={bill.id}>
-                    <td>{formatDate(bill.date)}</td>
-                    <td>{bill.description}</td>
-                    <td>{bill.amount}</td>
-                    <td>{bill.status}</td>
-                    <td>
-                      {bill.status === 'Unpaid' && (
-                        <button className="btn btn-primary">Pay Now</button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="billings-grid">
+            {bills.map((bill) => (
+              <div className="billing-card" key={bill.id}>
+                <div className="billing-header">
+                  <span className="billing-id">#{bill.id}</span>
+                  <span className="billing-date">{formatDate(bill.date)}</span>
+                </div>
+                <div className="billing-details">
+                  <div className="billing-item">
+                    <span className="billing-label">Description</span>
+                    <span className="billing-value">{bill.description}</span>
+                  </div>
+                  <div className="billing-item">
+                    <span className="billing-label">Amount</span>
+                    <span className="billing-amount">{bill.amount}</span>
+                  </div>
+                  <span className={`billing-status ${getStatusClass(bill.status)}`}>
+                    {bill.status}
+                  </span>
+                </div>
+                <div className="billing-actions">
+                  {bill.status === 'Unpaid' && (
+                    <button className="btn-primary">Pay Now</button>
+                  )}
+                  <button className="btn-primary">View Details</button>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
-          <p>No bills found.</p>
+          <div className="no-data">No bills found.</div>
         )}
       </div>
-
-      
     </PatientLayout>
   );
 };

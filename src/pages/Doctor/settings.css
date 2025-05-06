@@ -1,266 +1,233 @@
+.settings-page {
+  padding: 2rem;
+  background-color: var(--background-color);
+  min-height: 100vh;
+}
+
+.settings-page h1 {
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.success-message {
+  background-color: var(--success-color-light);
+  color: var(--success-color);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.error-message {
+  background-color: var(--danger-color-light);
+  color: var(--danger-color);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
 .settings-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.settings-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+.tab {
+  padding: 1rem 2rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  font-size: 1rem;
+}
+
+.tab:hover {
+  color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.tab.active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  background-color: white;
+}
+
+.settings-content {
+  padding: 2rem;
+}
+
+.settings-panel h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.panel-description {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Danger Zone Styles */
+.danger-zone {
+  background-color: var(--danger-color-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.danger-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid var(--danger-color);
+}
+
+.danger-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--danger-color);
+  font-size: 1.1rem;
+}
+
+.danger-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Delete Account Modal Styles */
+.delete-account-modal {
+  padding: 1rem;
+}
+
+.delete-account-modal p {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.warning-text {
+  color: var(--danger-color);
+  font-weight: 500;
+  margin: 1.5rem 0 1rem;
+}
+
+.delete-confirm-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--danger-color);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.delete-confirm-input:focus {
+  outline: none;
+  border-color: var(--danger-color);
+  box-shadow: 0 0 0 3px rgba(var(--danger-color-rgb), 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-page {
     padding: 1rem;
   }
-  
-  .page-title {
-    margin-bottom: 2rem;
-    font-size: 1.75rem;
-  }
-  
-  .settings-layout {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .settings-sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .sidebar-tab {
-    padding: 1rem;
-    border: none;
-    background: none;
-    text-align: left;
-    font-weight: 500;
-    cursor: pointer;
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.2s;
-  }
-  
-  .sidebar-tab:last-child {
-    border-bottom: none;
-  }
-  
-  .sidebar-tab:hover {
-    background-color: var(--light-bg);
-  }
-  
-  .sidebar-tab.active {
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
+
   .settings-content {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .settings-panel {
-    background-color: white;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
     padding: 1.5rem;
   }
-  
-  .panel-title {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .panel-description {
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
+
+  .tab {
+    padding: 1rem;
+    font-size: 0.95rem;
   }
-  
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: inherit;
-  }
-  
-  .form-group textarea {
-    resize: vertical;
-  }
-  
-  .checkbox-group {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .checkbox-group:last-child {
-    border-bottom: none;
-  }
-  
-  .checkbox-group label {
-    font-weight: 500;
-    margin-left: 0.5rem;
-  }
-  
-  .checkbox-group p {
-    margin: 0.25rem 0 0 1.75rem;
-    color: var(--text-light);
-    font-size: 0.875rem;
-  }
-  
-  .form-actions {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .working-day {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .working-day:last-child {
-    border-bottom: none;
-  }
-  
-  .day-toggle {
-    width: 150px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .day-toggle label {
-    margin-left: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .hours-inputs {
-    flex: 1;
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .time-input {
-    display: flex;
-    flex-direction: column;
-    width: 120px;
-  }
-  
-  .time-input label {
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-    color: var(--text-light);
-  }
-  
-  .danger-zone {
-    border-color: #ffdbdb;
-    background-color: #fff9f9;
-  }
-  
+
   .danger-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem;
-    border: 1px solid #ffcaca;
-    border-radius: 6px;
-    background-color: #fff5f5;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
   }
-  
-  .danger-info h3 {
-    margin: 0 0 0.5rem 0;
-    color: #e12d39;
-  }
-  
-  .danger-info p {
-    margin: 0;
-    max-width: 400px;
-  }
-  
-  .delete-account-modal p {
-    margin-bottom: 1rem;
-  }
-  
-  .warning-text {
-    color: #e12d39;
-    font-weight: 500;
-  }
-  
-  .delete-confirm-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
-  }
-  
+
   .modal-actions {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
-  
-  .error-message {
-    background-color: #fff0f0;
-    color: #e12d39;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+
+  .modal-actions button {
+    width: 100%;
   }
-  
-  .success-message {
-    background-color: #f0fff4;
-    color: #38a169;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-  }
-  
-  @media (max-width: 768px) {
-    .settings-layout {
-      flex-direction: column;
-    }
-    
-    .settings-sidebar {
-      width: 100%;
-    }
-    
-    .working-day {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .day-toggle {
-      margin-bottom: 0.5rem;
-    }
-    
-    .hours-inputs {
-      width: 100%;
-    }
-    
-    .danger-item {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .danger-info {
-      margin-bottom: 1rem;
-    }
-    
-    .modal-actions {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    
-    .modal-actions button {
-      width: 100%;
-    }
-  }
+}

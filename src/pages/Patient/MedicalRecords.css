@@ -43,8 +43,6 @@
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -277,36 +275,39 @@
 .records-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .record-card {
-  background-color: white;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .record-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .record-card-header {
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 1.25rem;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .record-card-title {
-  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
   color: #2c3e50;
-  margin: 0;
 }
 
 .record-card-date {
@@ -315,48 +316,58 @@
 }
 
 .record-card-body {
-  padding: 1rem;
+  padding: 1.25rem;
+  flex-grow: 1;
 }
 
 .record-card-field {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.record-card-field:last-child {
+  margin-bottom: 0;
 }
 
 .record-card-label {
-  font-weight: 500;
-  color: #7f8c8d;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
   display: block;
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .record-card-value {
+  font-size: 0.9375rem;
+  line-height: 1.4;
   color: #2c3e50;
 }
 
 .record-card-footer {
   padding: 1rem;
-  background-color: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #eee;
+  background: #f8f9fa;
   display: flex;
   justify-content: flex-end;
+  gap: 0.75rem;
 }
 
 .record-card-tag {
   display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: white;
-  margin-left: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
-.record-card-tag.diagnosis {
-  background-color: #3498db;
+.record-card-tag.normal {
+  background-color: #e6f7ee;
+  color: #27ae60;
 }
 
-.record-card-tag.treatment {
-  background-color: #2ecc71;
+.record-card-tag.abnormal {
+  background-color: #fdeaea;
+  color: #e74c3c;
 }
 
 .view-mode-toggle {
@@ -474,12 +485,27 @@
 
 .view-btn:hover {
   color: #2980b9;
-  transform: scale(1.2);
+  transform: scale(1.05);
+  text-decoration: underline;
 }
 
 .action-buttons {
   display: flex;
   gap: 0.5rem;
+}
+
+/* Card View Action Buttons - Centered */
+.card-view .action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Keep table view buttons right-aligned */
+.table-responsive .action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
 }
 
 @media (max-width: 768px) {
@@ -494,6 +520,27 @@
   
   .records-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .record-card {
+    margin-bottom: 1rem;
+  }
+  
+  .tabs {
+    flex-direction: column;
+  }
+  
+  .tab {
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .tab.active::after {
+    display: none;
+  }
+  
+  .tab.active {
+    background-color: #f0f8ff;
   }
 }
 
@@ -523,5 +570,100 @@
   
   .record-card-date {
     margin-top: 0.5rem;
+  }
+}
+
+.record-card-type {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.record-card-type.prescription {
+  background-color: #e6f7ee;
+  color: #27ae60;
+}
+
+.record-card-type.notes {
+  background-color: #fff3e0;
+  color: #f39c12;
+}
+
+.medications-list {
+  margin-top: 0.5rem;
+}
+
+.medication-item {
+  padding: 0.75rem;
+  background-color: var(--light-bg);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.medication-name {
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.medication-details {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.record-detail-item.medications {
+  margin: 1rem 0;
+}
+
+.record-detail-item.medications .label {
+  margin-bottom: 0.5rem;
+}
+
+.modal-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: var(--primary-color-dark);
+}
+
+@media (max-width: 768px) {
+  .record-card-type {
+    font-size: 0.8rem;
+  }
+  
+  .medication-item {
+    padding: 0.5rem;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .download-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

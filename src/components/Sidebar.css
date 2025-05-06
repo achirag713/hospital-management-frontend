@@ -1,34 +1,38 @@
 .sidebar {
   width: 260px;
   height: 100vh;
-  background: #005792; /* Changed to blue to match the header */
-  border-right: 1px solid var(--border-color);
+  background: #121212;
+  border-right: 1px solid #2a2a2a;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 1000;
   overflow-y: auto;
-  color: white; /* Set text color to white */
+  color: white;
 }
 
-/* Patient sidebar specific styling */
-.patient-sidebar {
+/* Patient and Doctor sidebar specific styling */
+.patient-sidebar,
+.doctor-sidebar {
   background: #121212;
   color: white;
   border-right: 1px solid #2a2a2a;
 }
 
-.patient-sidebar .menu-item {
+.patient-sidebar .menu-item,
+.doctor-sidebar .menu-item {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.patient-sidebar .menu-item:hover {
+.patient-sidebar .menu-item:hover,
+.doctor-sidebar .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
-.patient-sidebar .menu-item.active {
-  background-color: #005792; /* Keep your primary blue color for active items */
+.patient-sidebar .menu-item.active,
+.doctor-sidebar .menu-item.active {
+  background-color: #005792;
   color: white;
 }
 
@@ -103,7 +107,7 @@
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
-  color: white; /* Changed from var(--dark-color) to white */
+  color: white;
   text-decoration: none;
   border-radius: 8px;
   margin-bottom: 0.5rem;
@@ -111,12 +115,12 @@
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.15); /* Updated for better contrast on blue */
-  color: white; /* Keep text white on hover */
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
 }
 
 .menu-item.active {
-  background-color: rgba(255, 255, 255, 0.25); /* Lighter highlight for active item */
+  background-color: rgba(255, 255, 255, 0.25);
   color: white;
 }
 
@@ -164,6 +168,6 @@
   }
 
   .user-profile {
-    display: none; /* Hide user profile on mobile */
+    display: none;
   }
 }
